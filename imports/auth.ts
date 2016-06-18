@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-const allowedEmails = Meteor.isServer ? (process.env.ALLOWED_EMAILS || '').split(' ') : [];
+const allowedEmails = Meteor.isServer ? (process.env.ALLOWED_EMAILS || 'abesto0@gmail.com').split(' ') : [];
 
 export function isAuthed(self) {
     if (Meteor.isClient) {
@@ -15,7 +15,7 @@ export function isAuthed(self) {
         if (!user) {
             return false;
         }
-        if (Meteor.isProduction && allowedEmails.indexOf(user.services.google.email) == -1) {
+        if (allowedEmails.indexOf(user.services.google.email) == -1) {
             return false;
         }
         return true;
