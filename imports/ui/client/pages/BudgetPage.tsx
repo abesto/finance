@@ -9,10 +9,11 @@ import {SuperCategoryCollection} from "../../../api/categories/index";
 
 export class BudgetPage extends React.Component<{}, {}> {
     createSuperCategory(name) {
+        // using sorted findOne for max selection is inefficient, but clean, and number of categories won't go high anyway
+        const lastSuperCategory = SuperCategoryCollection.findOne({}, {sort: {budgetSortIndex: -1}});
         SuperCategoryCollection.insert({
             name: name,
-            // using sorted findOne for max selection is inefficient, but clean, and number of categories won't go high anyway
-            budgetSortIndex: SuperCategoryCollection.findOne({}, {sort: {budgetSortIndex: -1}}).budgetSortIndex + 1
+            budgetSortIndex: lastSuperCategory ? lastSuperCategory.budgetSortIndex + 1 : 0
         });
     }
 

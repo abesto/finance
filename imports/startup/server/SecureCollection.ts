@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import {denyAllCollectionMethods} from "../../auth";
+import {denyAllCollectionMethods} from "./auth";
 
 const original = Mongo.Collection;
 

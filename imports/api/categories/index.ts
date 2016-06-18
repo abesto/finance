@@ -1,6 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-import {denyAllCollectionMethods} from "../../auth";
 
 export interface SuperCategory {
     _id?: string
@@ -16,10 +15,7 @@ export interface Category {
 }
 
 export const SuperCategoryCollection = new Mongo.Collection<SuperCategory>('supercategories');
-denyAllCollectionMethods(SuperCategoryCollection);
-
 export const CategoryCollection = new Mongo.Collection<Category>('categories');
-denyAllCollectionMethods(CategoryCollection);
 
 export function isCategory(item: Category | SuperCategory): item is Category {
     return 'superCategoryId' in item;
