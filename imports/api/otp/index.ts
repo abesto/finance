@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Collection2 } from 'meteor/collections2';
+import {denyAllCollectionMethods} from "../../auth";
 
 export var OtpSchemas: {[key: string]: SimpleSchema} = {};
 
@@ -66,6 +67,7 @@ OtpSchemas["OtpImportLog"] = new SimpleSchema({
 
 export const OtpImportLogCollection = new Mongo.Collection('otp.importlog') as Collection2<OtpImportLog>;
 OtpImportLogCollection.attachSchema(OtpSchemas["OtpImportLog"]);
-
+denyAllCollectionMethods(OtpImportLogCollection);
 
 export const OtpCsvLineCollection = new Mongo.Collection<OtpCsvLine>('otp.csvlines');
+denyAllCollectionMethods(OtpCsvLineCollection);

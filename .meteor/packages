@@ -25,3 +25,5 @@ check
 meteortypescript:compiler
 
 less
+accounts-ui
+accounts-google

@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import {denyAllCollectionMethods} from "../../auth";
 
 export interface SuperCategory {
     _id?: string
@@ -15,7 +16,10 @@ export interface Category {
 }
 
 export const SuperCategoryCollection = new Mongo.Collection<SuperCategory>('supercategories');
+denyAllCollectionMethods(SuperCategoryCollection);
+
 export const CategoryCollection = new Mongo.Collection<Category>('categories');
+denyAllCollectionMethods(CategoryCollection);
 
 export function isCategory(item: Category | SuperCategory): item is Category {
     return 'superCategoryId' in item;
@@ -66,5 +70,13 @@ Meteor.methods({
         SuperCategoryCollection.update(source._id, {$set: {
             budgetSortIndex: target.budgetSortIndex
         }});
-    }
+    },
+
+    'budget.rename-category': (categoryId: number, newName: string) => CategoryCollection.update(
+        categoryId, {$set: {name: newName}}
+    ),
+
+    'budget.rename-super-category': (superCategoryId: number, newName: string) => SuperCategoryCollection.update(
+        superCategoryId, {$set: {name: newName}}
+    ),
 });

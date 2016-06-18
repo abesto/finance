@@ -94,7 +94,7 @@ interface DndP extends P {
 
 class _SuperCategoryRow extends React.Component<DndP, {}> {
     rename = ({newName}) => {
-        SuperCategoryCollection.update(this.props.superCategory._id, {$set: {name: newName}});
+        Meteor.call('budget.rename-super-category', this.props.superCategory._id, newName);
     };
 
     render() {

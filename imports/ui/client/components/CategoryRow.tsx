@@ -51,7 +51,7 @@ interface DndP extends P {
 
 class _CategoryRow extends React.Component<DndP, {}> {
     rename = ({newName}) => {
-        CategoryCollection.update(this.props.category._id, {$set: {name: newName}});
+        Meteor.call('budget.rename-category', this.props.category._id, newName);
     };
 
     render() {
