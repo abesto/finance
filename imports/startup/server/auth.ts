@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import {Logger} from "./Logger";
 
 const allowedEmails = Meteor.isServer ? (process.env.ALLOWED_EMAILS || 'abesto0@gmail.com').split(' ') : [];
 
@@ -13,17 +14,17 @@ export function getEmail(self) {
 export function isAuthed(self) {
     const userId = self.userId;
     if (!userId) {
-        console.error({type: 'auth-denied', reason: 'no userId'});
+        Logger.error({type: 'auth-denied', reason: 'no userId'});
         return false;
     }
     const user = Meteor.users.findOne(userId);
     if (!user) {
-        console.error({type: 'auth-denied', reason: 'no user', userId: userId});
+        Logger.error({type: 'auth-denied', reason: 'no user', userId: userId});
         return false;
     }
     const email = user.services.google.email;
     if (allowedEmails.indexOf(email) == -1) {
-        console.error({type: 'auth-denied', reason: 'not in allowed email list', userId: userId, email: email, allowedEmailList: allowedEmails});
+        Logger.error({type: 'auth-denied', reason: 'not in allowed email list', userId: userId, email: email, allowedEmailList: allowedEmails});
         return false;
     }
     return true;
@@ -35,7 +36,7 @@ export function throwUnlessAuthed(self, logData) {
             logData = {};
         }
         logData["error"] = "not-authorized";
-        console.error(logData);
+        Logger.error(logData);
         throw new Meteor.Error("not-authorized");
     }
 }
