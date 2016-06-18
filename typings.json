@@ -1,0 +1,18 @@
+{
+  "globalDependencies": {
+    "csv-parse": "registry:dt/csv-parse#1.1.0+20160602150508",
+    "material-ui": "registry:dt/material-ui#0.15.0+20160608102658",
+    "meteor": "registry:env/meteor#1.3.0+20160531044850",
+    "moment": "registry:dt/moment#2.8.0+20160316155526",
+    "numeraljs": "registry:dt/numeraljs#0.0.0+20160316155526",
+    "react": "registry:dt/react#0.14.0+20160602151522",
+    "react-dnd": "registry:dt/react-dnd#1.1.4+20160316155526",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "react-tap-event-plugin": "registry:dt/react-tap-event-plugin#0.0.0+20160602142434"
+  },
+  "dependencies": {
+    "griddle-react": "registry:npm/griddle-react#0.4.0+20160413183651",
+    "lodash": "registry:npm/lodash#4.0.0+20160416211519",
+    "react-router": "registry:npm/react-router#2.4.0+20160616150328"
+  }
+}

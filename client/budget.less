@@ -1,0 +1,68 @@
+table.budget {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    .editable-category-name, .editable-super-category-name {
+        padding: 3px;
+        border: 2px solid transparent;
+        &:hover {
+            border: 2px solid rgb(0, 176, 214);
+            border-radius: 5px;
+        }
+        cursor: pointer;
+    }
+
+    th {
+        font-size: 11px;
+        font-weight: normal;
+        color: darkgray;
+    }
+
+    td {
+        border-bottom: 1px solid silver;
+        border-top: 1px solid silver;
+    }
+
+    td, th {
+        line-height: 2;
+        &:first-child {
+            text-align: left;
+            padding-left: 25px;
+        }
+        &:last-child {
+            padding-right: 25px;
+        }
+        text-align: right;
+    }
+
+    tr.super-category-row {
+        background-color: rgb(229, 245, 249);
+
+        td, input {
+            font-size: 17px;
+        }
+
+        .money-amount {
+            color: rgb(51, 51, 51);
+        }
+    }
+
+    tr.category-row {
+        td:first-child {
+            padding-left: 40px;
+        }
+
+        td, input {
+            font-size: 14px;
+        }
+
+        .money-amount {
+            color: rgb(207, 213, 215);
+        }
+    }
+
+    .money-amount {
+        font-size: 13px;
+    }
+}

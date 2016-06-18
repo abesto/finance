@@ -1,0 +1,30 @@
+{
+  "name": "finance",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "csv-parse": "^1.1.1",
+    "griddle-react": "^0.5.1",
+    "install": "^0.8.1",
+    "lodash": "^4.13.1",
+    "material-ui": "^0.15.0",
+    "meteor-node-stubs": "~0.2.0",
+    "moment": "^2.13.0",
+    "npm": "^3.10.1",
+    "numeral": "^1.5.3",
+    "react": "^15.1.0",
+    "react-addons-pure-render-mixin": "^15.1.0",
+    "react-dnd": "^2.1.4",
+    "react-dnd-html5-backend": "^2.1.2",
+    "react-dom": "^15.1.0",
+    "react-dropzone": "^3.5.1",
+    "react-router": "^2.4.1",
+    "react-tap-event-plugin": "^1.0.0",
+    "riek": "^1.0.2"
+  },
+  "devDependencies": {
+    "riek": "^1.0.2"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/hodavidhara/griddle-react-typings/6dfbdc9b0f8570ad1984df3709cfe379abb51661/typings.json",
+    "raw": "registry:npm/griddle-react#0.4.0+20160413183651",
+    "main": "griddle-react.d.ts",
+    "global": false,
+    "name": "griddle-react",
+    "type": "typings"
+  }
+}
