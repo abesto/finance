@@ -15,3 +15,9 @@ dependencies:
 test:
   override:
     - ./ci.sh
+
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: wnab
