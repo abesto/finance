@@ -20,5 +20,8 @@
     "react-router": "^2.4.1",
     "react-tap-event-plugin": "^1.0.0",
     "riek": "^1.0.2"
+  },
+  "devDependencies": {
+    "chimp": "^0.35.0"
   }
 }
