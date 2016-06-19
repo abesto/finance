@@ -3,7 +3,7 @@ import {AppBar, FlatButton} from "material-ui";
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import {BudgetCategoriesGriddle} from "../containers/BudgetCategoriesGriddle";
-import {BudgetAppBar, Sidebar, Content} from "../components/index";
+import {Sidebar, Content} from "../components/index";
 import {TextInputDialog} from "../components/TextInputDialog";
 import {Logger} from "../../../startup/client/Logger";
 
@@ -35,11 +35,13 @@ export class BudgetPage extends React.Component<{}, {}> {
                 okButtonLabel="Create"
                 onOk={this.createSuperCategory}
             />
-            <AppBar iconElementRight={
-                <FlatButton label="Category Group" icon={<AddIcon />} onClick={this.handleClickeDCreateCategoryGroup} />
-            }/>
-            <Sidebar appBar={<BudgetAppBar/>}/>
+            <Sidebar/>
             <Content>
+                <AppBar
+                    iconElementRight={<FlatButton label="Category Group" icon={<AddIcon />} onClick={this.handleClickeDCreateCategoryGroup} />}
+                    iconElementLeft={<span/>}
+                    title="Budget"
+                />
                 <BudgetCategoriesGriddle/>
             </Content>
         </div>);

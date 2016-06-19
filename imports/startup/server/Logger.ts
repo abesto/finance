@@ -3,11 +3,13 @@ import {MeteorMethodsUnsafe} from "./InsecureMethods";
 import * as _ from 'lodash';
 
 interface LoggerContext {
-    userId: string
+    userId: string,
+    connection: Meteor.Connection
 }
 
 function decorate(ctx: LoggerContext, msg) {
     msg["user"] = {id: ctx.userId, email: getEmail(ctx)};
+    msg["connection"] = {id: ctx.connection.id, clientAddress: ctx.connection.clientAddress};
     if (!msg.hasOwnProperty("source")) {
         msg["source"] = "server";
     }

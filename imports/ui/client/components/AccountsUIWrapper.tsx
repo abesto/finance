@@ -7,7 +7,7 @@ interface S {
     view: Blaze.View
 }
 
-export default class AccountsUIWrapper extends React.Component<{}, S> {
+export class AccountsUIWrapper extends React.Component<{}, S> {
     constructor() {
         super();
         this.state = {view: null};

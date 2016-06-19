@@ -1,8 +1,7 @@
 export * from "./Sidebar"
 export * from "./Content"
-export * from "./BudgetAppBar"
+export * from "./WnabAppBar"
 
-export * from "./OtpImportAppBar"
 export * from "./OtpImportLogCard"
 export * from "./OtpImportLogEntryTableRow"
 export * from "./OtpImportLogEntryTableHeader"

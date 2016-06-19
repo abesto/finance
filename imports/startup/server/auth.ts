@@ -3,6 +3,7 @@ import {Logger} from "./Logger";
 import {MeteorMethodsUnsafe} from "./InsecureMethods";
 
 const allowedEmails = Meteor.isServer ? (process.env["ALLOWED_EMAILS"] || 'abesto0@gmail.com').split(' ') : [];
+Accounts.validateNewUser((user) => allowedEmails.indexOf(user.services.google.email) > -1);
 
 export function getEmail(self) {
     try {
@@ -15,17 +16,17 @@ export function getEmail(self) {
 export function isAuthed(self) {
     const userId = self.userId;
     if (!userId) {
-        Logger.error(self, {type: 'auth-denied', reason: 'no userId'});
+        Logger.info(self, {type: 'not-authed', reason: 'no userId'});
         return false;
     }
     const user = Meteor.users.findOne(userId);
     if (!user) {
-        Logger.error(self, {type: 'auth-denied', reason: 'no user with this id'});
+        Logger.error(self, {type: 'not-authed', reason: 'no user with this id'});
         return false;
     }
     const email = user.services.google.email;
     if (allowedEmails.indexOf(email) == -1) {
-        Logger.error(self, {type: 'auth-denied', reason: 'not in allowed email list', email: email, allowedEmailList: allowedEmails});
+        Logger.error(self, {type: 'not-authorized', reason: 'not in allowed email list', email: email, allowedEmailList: allowedEmails});
         return false;
     }
     return true;

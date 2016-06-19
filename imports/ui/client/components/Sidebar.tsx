@@ -5,13 +5,11 @@ import EmailIcon from 'material-ui/svg-icons/communication/email';
 import CloudUploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import BalanceIcon from 'material-ui/svg-icons/action/account-balance';
 
+import {WnabAppBar} from './WnabAppBar';
+
 const SelectableList = MakeSelectable(List);
 
-interface PPublic {
-    appBar: JSX.Element
-}
-
-interface PPure extends PPublic {
+interface PPure {
     onChange: (e, value: any) => void
 }
 
@@ -19,10 +17,10 @@ interface PWithRouter extends PPure {
     router: IRouter
 }
 
-function PureSidebar({appBar, onChange}: PPure) {
+function PureSidebar({onChange}: PPure) {
     return (
         <Drawer docked={true}>
-            {appBar}
+            <WnabAppBar/>
             <SelectableList onChange={onChange} value={location.pathname}>
                 <ListItem leftIcon={<EmailIcon/>} primaryText="Budget" value="/budget" />
                 <ListItem leftIcon={<BalanceIcon/>} primaryText="All Accounts" />
@@ -36,5 +34,5 @@ function PureSidebar({appBar, onChange}: PPure) {
     );
 }
 
-export const Sidebar = withRouter<PPublic>((p:PWithRouter) =>
-    <PureSidebar appBar={p.appBar} onChange={(e, url) => p.router.push(url)} />);
+export const Sidebar = withRouter((p:PWithRouter) =>
+    <PureSidebar onChange={(e, url) => p.router.push(url)} />);

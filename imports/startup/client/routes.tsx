@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom'
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect } from 'react-router'
 
-import {OtpImportLogListPage, BudgetPage} from "../../ui/client/pages/index.ts"
+import { history } from './history';
+import {OtpImportLogListPage, BudgetPage, LoginPage} from "../../ui/client/pages/index.ts"
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AccountsUIWrapper from "../../ui/client/components/AccountsUIWrapper";
 
 function requireAuth(nextState, replace, cb) {
     Meteor.call('isAuthed', function (err, result) {
@@ -36,15 +36,17 @@ function redirectIfAuthed(nextState, replace, cb) {
     });
 }
 
-browserHistory.listen(function (location: Location) {
+history.listen(function (location: Location) {
     Meteor.call('log.info', {type: 'routing', path: location.pathname, search: location.search});
 });
+
+Accounts.onLogin(() => history.push("/"));
 
 Meteor.startup(() =>
     render((
       <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <Router history={browserHistory}>
-              <Route path="/login" component={AccountsUIWrapper} onEnter={redirectIfAuthed} />
+          <Router history={history}>
+              <Route path="/login" component={LoginPage} onEnter={redirectIfAuthed} />
               <Route path="/" onEnter={requireAuth}>
                   <IndexRedirect to="/budget" />
                   <Route path="otp" component={OtpImportLogListPage}/>
