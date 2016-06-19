@@ -75,4 +75,31 @@ Meteor.methods({
     'budget.rename-super-category': (superCategoryId: number, newName: string) => SuperCategoryCollection.update(
         superCategoryId, {$set: {name: newName}}
     ),
+
+    'budget.move-to-top': (category: Category, superCategory: SuperCategory) => {
+        const firstNewSiblingCategory = CategoryCollection.findOne({superCategoryId: superCategory._id}, {sort: {budgetSortIndex: 1}});
+        if (firstNewSiblingCategory == null) {
+            return CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: 0}});
+        } else {
+            return Meteor.call('budget.move-category', category, firstNewSiblingCategory);
+        }
+    },
+
+    'budget.move-to-bottom': (category: Category, superCategory: SuperCategory) => {
+        const lastNewSiblingCategory = CategoryCollection.findOne({superCategoryId: superCategory._id}, {sort: {budgetSortIndex: -1}});
+        if (lastNewSiblingCategory == null) {
+            return CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: 0}});
+        } else {
+            return CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: lastNewSiblingCategory.budgetSortIndex + 1}});
+        }
+    },
+
+    'budget.create-super-category': (name: string) => {
+        // using sorted findOne for max selection is inefficient, but clean, and number of categories won't go high anyway
+        const lastSuperCategory = SuperCategoryCollection.findOne({}, {sort: {budgetSortIndex: -1}});
+        return SuperCategoryCollection.insert({
+            name: name,
+            budgetSortIndex: lastSuperCategory ? lastSuperCategory.budgetSortIndex + 1 : 0
+        });
+    }
 });

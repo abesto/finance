@@ -24,21 +24,11 @@ function moveSuperCategory(source: SuperCategory, target: SuperCategory) {
 }
 
 function moveToTop(category: Category, superCategory: SuperCategory) {
-    const firstNewSiblingCategory = CategoryCollection.findOne({superCategoryId: superCategory._id}, {sort: {budgetSortIndex: 1}});
-    if (firstNewSiblingCategory == null) {
-        CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: 0}});
-    } else {
-        moveCategory(category, firstNewSiblingCategory);
-    }
+    Meteor.call('budget.move-to-top', category, superCategory);
 }
 
 function moveToBottom(category: Category, superCategory: SuperCategory) {
-    const lastNewSiblingCategory = CategoryCollection.findOne({superCategoryId: superCategory._id}, {sort: {budgetSortIndex: -1}});
-    if (lastNewSiblingCategory == null) {
-        CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: 0}});
-    } else {
-        CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: lastNewSiblingCategory.budgetSortIndex + 1}});
-    }
+    Meteor.call('budget.move-to-bottom', category, superCategory);
 }
 
 function renderRow(row: RowData) {
