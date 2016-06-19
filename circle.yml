@@ -7,7 +7,7 @@ dependencies:
     - ~/.meteor
     - ~/.npm
   pre:
-    - ~/.meteor/meteor || curl https://install.meteor.com | /bin/sh
+    - [ -f ~/.meteor/meteor ] || curl https://install.meteor.com | /bin/sh
     - ~/.meteor/meteor update
     - npm install chimp
 
