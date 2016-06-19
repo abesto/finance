@@ -4,6 +4,20 @@
 // These are Chimp globals
 /* globals browser assert server */
 
+const mocha = require('mocha');
+
+const oldIt = it;
+it = function it(name, fn) {
+    return oldIt(name, function () {
+        try {
+            fn();
+        } catch (e) { }
+        if (process.env.hasOwnProperty('CIRCLE_TEST_REPORTS')) {
+            browser.saveScreenshot(process.env.CIRCLE_TEST_REPORTS + '/' + mocha.utils.slug(name) + '.png');
+        }
+    });
+};
+
 describe('OTP Import', function () {
     before(function() {
         browser.url('/otp');
@@ -13,7 +27,7 @@ describe('OTP Import', function () {
     beforeEach(function () {
         server.call('fixtures.reset-database');
     });
-    
+
     const page = {
         sidebar: {
             otp: '#nav-otp'
