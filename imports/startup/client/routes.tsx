@@ -36,6 +36,10 @@ function redirectIfAuthed(nextState, replace, cb) {
     });
 }
 
+browserHistory.listen(function (location: Location) {
+    Meteor.call('log.info', {type: 'routing', path: location.pathname, search: location.search});
+});
+
 Meteor.startup(() =>
     render((
       <MuiThemeProvider muiTheme={getMuiTheme()}>
