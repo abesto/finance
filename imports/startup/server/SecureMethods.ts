@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import * as _ from 'lodash';
-import {throwUnlessAuthed, getEmail} from "./auth";
+import {throwUnlessAuthed} from "./auth";
 import {Logger} from "./Logger";
+import {MeteorMethodsUnsafe} from "./InsecureMethods";
 
 Meteor.methods = function(methods: Object) {
-    return Meteor.methodsUnsafe(_.mapValues(methods, (fn, name) => {
+    return MeteorMethodsUnsafe(_.mapValues(methods, (fn, name) => {
         return function() {
             var action = {type: 'method', arguments: Array.prototype.slice.call(arguments), methodName: name};
 

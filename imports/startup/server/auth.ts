@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import {Logger} from "./Logger";
+import {MeteorMethodsUnsafe} from "./InsecureMethods";
 
-const allowedEmails = Meteor.isServer ? (process.env.ALLOWED_EMAILS || 'abesto0@gmail.com').split(' ') : [];
+const allowedEmails = Meteor.isServer ? (process.env["ALLOWED_EMAILS"] || 'abesto0@gmail.com').split(' ') : [];
 
 export function getEmail(self) {
     try {
@@ -47,7 +48,7 @@ export function denyAllCollectionMethods(collection) {
 }
 
 Meteor.startup(function () {
-    Meteor.methodsUnsafe({
+    MeteorMethodsUnsafe({
         isAuthed: function() {
             return isAuthed(this);
         },

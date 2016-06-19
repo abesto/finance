@@ -1,6 +1,4 @@
-import {Meteor} from 'meteor/meteor';
-Meteor.methodsUnsafe = Meteor.methods;
-
+import './InsecureMethods.ts'
 import './SecurePublish.ts'
 import './SecureCollection.ts'
 import './SecureMethods.ts'
