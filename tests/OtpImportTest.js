@@ -6,7 +6,7 @@
 
 describe('OTP Import', function () {
     before(function() {
-        browser.url('http://localhost:3000/otp');
+        browser.url('/otp');
     });
 
     beforeEach(function () {
@@ -36,7 +36,7 @@ describe('OTP Import', function () {
     });
 
     it('can import and expand / collapse OTP CSV transaction logs', function () {
-        browser.waitForExist(page.uploadButton, 2000);
+        browser.waitForExist(page.uploadButton);
 
         // Don't know how to assert that this opens a file selector dialog :(
         //browser.click(uploadButtonSelector);
@@ -73,7 +73,7 @@ describe('OTP Import', function () {
     });
 
     it('retains items between reloads', function () {
-        browser.waitForExist(page.uploadButton, 2000);
+        browser.waitForExist(page.uploadButton);
 
         // Upload some data
         browser.chooseFile(page.fileInput, './tests/otp-test-input.csv');
@@ -84,7 +84,7 @@ describe('OTP Import', function () {
         browser.waitForExist(page.card.container + ':nth-child(3)');
 
         // Reload
-        browser.url('http://localhost:3000/otp');
+        browser.url('/otp');
 
         // Assert that the items are still there
         browser.waitForExist(page.card.container + ':nth-child(3)');
