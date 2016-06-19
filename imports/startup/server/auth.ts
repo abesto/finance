@@ -3,6 +3,7 @@ import {Logger} from "./Logger";
 import {MeteorMethodsUnsafe} from "./InsecureMethods";
 
 const allowedEmails = Meteor.isServer ? (process.env["ALLOWED_EMAILS"] || 'abesto0@gmail.com').split(' ') : [];
+export const skipAuthentication = Meteor.isDevelopment && process.env["SKIP_AUTHENTICATION"] == 'for-testing';
 Accounts.validateNewUser((user) => allowedEmails.indexOf(user.services.google.email) > -1);
 
 export function getEmail(self) {
@@ -14,6 +15,10 @@ export function getEmail(self) {
 }
 
 export function isAuthed(self) {
+    if (skipAuthentication) {
+        Logger.info(self, {type: 'auth-skipped'});
+        return true;
+    }
     const userId = self.userId;
     if (!userId) {
         Logger.info(self, {type: 'not-authed', reason: 'no userId'});

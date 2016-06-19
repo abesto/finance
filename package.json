@@ -1,9 +1,6 @@
 {
   "name": "finance",
   "private": true,
-  "scripts": {
-    "start": "meteor run"
-  },
   "dependencies": {
     "csv-parse": "^1.1.1",
     "griddle-react": "^0.5.1",

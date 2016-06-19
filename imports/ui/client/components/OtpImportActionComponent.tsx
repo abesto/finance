@@ -46,11 +46,12 @@ export class OtpImportActionComponent extends React.Component<P, {}>{
 
     render() {
         return <input
-                style={{display: 'none'}}
-                ref="fileInput"
-                type="file"
-                onChange={this.onChange}
-            />
+            className="otp-import-file-input"
+            style={{display: 'none'}}
+            ref="fileInput"
+            type="file"
+            onChange={this.onChange}
+        />
     }
 }
 

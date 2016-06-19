@@ -42,7 +42,7 @@ export class OtpImportLogDetails extends React.Component<P, S> {
             return <p>Waiting for import log details...</p>;
         }
         return (
-            <div>
+            <div className="otp-import-log-details">
                 <Dialog
                     title="Transaction details"
                     open={this.state.showDialog}
@@ -51,7 +51,7 @@ export class OtpImportLogDetails extends React.Component<P, S> {
                 >
                     {this.renderDialogContent()}
                 </Dialog>
-                <Table>
+                <Table className="otp-import-log-details-table">
                     <TableHeader>
                         <OtpImportLogEntryTableHeader/>
                     </TableHeader>

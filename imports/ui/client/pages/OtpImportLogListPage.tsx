@@ -36,6 +36,7 @@ export class OtpImportLogListPage extends React.Component<{}, {}> {
 
                 <OtpImportActionComponent ref="importer"/>
                 <FloatingActionButton
+                    id="otp-import-upload-button"
                     style={addButtonStyle}
                     onClick={this.startImport}
                 >

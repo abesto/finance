@@ -27,8 +27,9 @@ export const OtpImportLogCard = ({item}: P) => {
         title = from + " to " + until;
     }
     return (
-        <Card>
+        <Card className="otp-import-log-card">
             <CardHeader
+                className="otp-import-log-card-header"
                 title={title}
                 subtitle={itemCount(item) + ' entries imported at ' + moment(item.importedAt).format('YYYY-MM-DD HH:mm')}
                 actAsExpander={true}
