@@ -6,9 +6,9 @@ const originalPublish = Meteor.publish;
 
 Meteor.publish = function publish(name, f) {
     originalPublish(name, function() {
-        var action = {type: 'subscribe', arguments: Array.prototype.slice.call(arguments), subscriptionName: name, user: {_id: this.userId, email: getEmail(this)}};
+        var action = {type: 'subscribe', arguments: Array.prototype.slice.call(arguments), subscriptionName: name};
         throwUnlessAuthed(this, action);
-        Logger.info(action);
+        Logger.info(this, action);
         return f.apply(this, arguments);
     });
 };

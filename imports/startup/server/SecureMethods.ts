@@ -6,13 +6,13 @@ import {Logger} from "./Logger";
 Meteor.methods = function(methods: Object) {
     return Meteor.methodsUnsafe(_.mapValues(methods, (fn, name) => {
         return function() {
-            var action = {type: 'method', arguments: Array.prototype.slice.call(arguments), methodName: name, user: {_id: this.userId, email: getEmail(this)}}
+            var action = {type: 'method', arguments: Array.prototype.slice.call(arguments), methodName: name};
 
             throwUnlessAuthed(this, action);
             const retval = fn.apply(this, arguments);
 
             action["retval"] = retval;
-            Logger.info(action);
+            Logger.info(this, action);
 
             return retval;
         };
