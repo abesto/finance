@@ -748,6 +748,7 @@ declare namespace __MaterialUI {
 
         interface CardProps extends React.Props<Card> {
             actAsExpander?: boolean;
+            className?: string
             containerStyle?: React.CSSProperties;
             expandable?: boolean;
             expanded?: boolean;
@@ -779,6 +780,7 @@ declare namespace __MaterialUI {
         interface CardHeaderProps extends React.Props<CardHeader> {
             actAsExpander?: boolean;
             avatar?: React.ReactNode;
+            className?: string
             expandable?: boolean;
             showExpandableButton?: boolean;
             style?: React.CSSProperties;

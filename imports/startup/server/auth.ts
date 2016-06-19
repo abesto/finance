@@ -3,7 +3,7 @@ import {Logger} from "./Logger";
 import {MeteorMethodsUnsafe} from "./InsecureMethods";
 
 const allowedEmails = Meteor.isServer ? (process.env["ALLOWED_EMAILS"] || 'abesto0@gmail.com').split(' ') : [];
-export const skipAuthentication = Meteor.isDevelopment && process.env["SKIP_AUTHENTICATION"] == 'for-testing';
+export const skipAuthentication = process.env["NODE_ENV"] != 'production' && process.env["SKIP_AUTHENTICATION"] == 'for-testing';
 Accounts.validateNewUser((user) => allowedEmails.indexOf(user.services.google.email) > -1);
 
 export function getEmail(self) {
