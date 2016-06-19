@@ -1,6 +1,10 @@
+machine:
+  node: 6.1.0
+
 dependencies:
   cache_directories:
     - ~/.meteor
+    - ~/.npm
   pre:
     - meteor || curl https://install.meteor.com | /bin/sh
     - npm install chimp
