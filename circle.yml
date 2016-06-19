@@ -9,7 +9,6 @@ dependencies:
     - .meteor/local
   pre:
     - "[ -f ~/.meteor/meteor ] || curl https://install.meteor.com | /bin/sh"
-    - ~/.meteor/meteor update
     - npm install chimp
 
 test:
