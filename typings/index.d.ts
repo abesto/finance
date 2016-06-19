@@ -1,5 +1,4 @@
 /// <reference path="globals/csv-parse/index.d.ts" />
-/// <reference path="globals/material-ui/index.d.ts" />
 /// <reference path="globals/meteor/index.d.ts" />
 /// <reference path="globals/moment/index.d.ts" />
 /// <reference path="globals/numeraljs/index.d.ts" />
