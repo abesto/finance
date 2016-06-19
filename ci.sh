@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-SKIP_AUTHENTICATION=for-testing meteor run | tee meteor.log &
+SKIP_AUTHENTICATION=for-testing ~/.meteor/meteor run | tee meteor.log &
 server=$!
 
 echo "--- Starting server PID=$server ---"
