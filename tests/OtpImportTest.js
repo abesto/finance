@@ -7,6 +7,7 @@
 describe('OTP Import', function () {
     before(function() {
         browser.url('/otp');
+        browser.waitForExist(page.sidebar.otp, 2 * 60 * 1000);
     });
 
     beforeEach(function () {
