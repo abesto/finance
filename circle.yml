@@ -6,6 +6,7 @@ dependencies:
   cache_directories:
     - ~/.meteor
     - ~/.npm
+    - .meteor/local
   pre:
     - "[ -f ~/.meteor/meteor ] || curl https://install.meteor.com | /bin/sh"
     - ~/.meteor/meteor update
