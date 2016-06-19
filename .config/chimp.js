@@ -1,6 +1,6 @@
 module.exports = {
     webdriverio: {
-        waitforTimeout: 10000,
+        waitforTimeout: 30000,
         baseUrl: 'http://localhost:3000',
         screenshotPath: process.env.CIRCLE_TEST_REPORTS
     },
