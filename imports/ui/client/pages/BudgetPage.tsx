@@ -10,7 +10,7 @@ import {Logger} from "../../../startup/client/Logger";
 export class BudgetPage extends React.Component<{}, {}> {
     dialog: TextInputDialog;
 
-    handleClickeDCreateCategoryGroup = () => {
+    handleClickedCreateCategoryGroup = () => {
         Logger.info({type: 'ui', flow: 'create-super-category', event: 'clicked-start'});
         this.dialog.open();
     };
@@ -39,7 +39,7 @@ export class BudgetPage extends React.Component<{}, {}> {
             <Sidebar/>
             <Content>
                 <AppBar
-                    iconElementRight={<FlatButton className="create-category-group-button" label="Category Group" icon={<AddIcon />} onClick={this.handleClickeDCreateCategoryGroup} />}
+                    iconElementRight={<FlatButton className="create-category-group-button" label="Category Group" icon={<AddIcon />} onClick={this.handleClickedCreateCategoryGroup} />}
                     iconElementLeft={<span/>}
                     title="Budget"
                 />

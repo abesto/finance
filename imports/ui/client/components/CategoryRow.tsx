@@ -58,7 +58,7 @@ class _CategoryRow extends React.Component<DndP, {}> {
         const {connectDragSource, connectDropTarget, category} = this.props;
         return connectDragSource(connectDropTarget(
             <tr className="category-row">
-                <td>
+                <td className="category-name">
                     <RIEInput className="editable-category-name" value={category.name} propName="newName" change={this.rename}/>
                 </td>
                 <td><MoneyAmount amount={0}/></td>

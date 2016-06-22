@@ -53,7 +53,7 @@ export class TextInputDialog extends React.Component<P, S> {
 
         return (
             <Dialog
-                className={this.props.className}
+                className={this.props.className + (this.state.open ? (' ' + this.props.className + '-open') : '')}
                 title={this.props.title}
                 actions={actions}
                 open={this.state.open}
@@ -63,6 +63,7 @@ export class TextInputDialog extends React.Component<P, S> {
             >
                 <p>{this.props.description}</p>
                 <TextField
+                    className={this.props.className + '-input'}
                     fullWidth={true}
                     ref={this.inputMounted}
                     name={"text-input-dialog-" + Math.random()}

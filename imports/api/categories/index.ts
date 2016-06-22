@@ -1,11 +1,18 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import { Collection2 } from 'meteor/collections2';
+
+export var CategorySchemas: {[key: string]: SimpleSchema} = {};
 
 export interface SuperCategory {
     _id?: string
     name: string
     budgetSortIndex: number
 }
+CategorySchemas["SuperCategory"] = new SimpleSchema({
+    name: {type: String},
+    budgetSortIndex: {type: Number}
+});
 
 export interface Category {
     _id?: string
@@ -13,15 +20,31 @@ export interface Category {
     superCategoryId: string
     budgetSortIndex: number
 }
+CategorySchemas["Category"] = new SimpleSchema({
+    name: {type: String},
+    superCategoryId: {type: String},
+    budgetSortIndex: {type: Number}
+});
 
-export const SuperCategoryCollection = new Mongo.Collection<SuperCategory>('supercategories');
-export const CategoryCollection = new Mongo.Collection<Category>('categories');
+export const SuperCategoryCollection = new Mongo.Collection<SuperCategory>('supercategories') as Collection2<SuperCategory>;
+SuperCategoryCollection.attachSchema(CategorySchemas["SuperCategory"]);
+
+export const CategoryCollection = new Mongo.Collection<Category>('categories') as Collection2<Category>;
+CategoryCollection.attachSchema(CategorySchemas["Category"]);
 
 export function isCategory(item: Category | SuperCategory): item is Category {
     return 'superCategoryId' in item;
 }
 export function isSuperCategory(item: Category | SuperCategory): item is SuperCategory {
     return !isCategory(item);
+}
+
+function categoryBudgetSortIndexForBottom(superCategoryId) {
+    const lastNewSiblingCategory = CategoryCollection.findOne({superCategoryId: superCategoryId}, {sort: {budgetSortIndex: -1}});
+    if (lastNewSiblingCategory == null) {
+        return 0;
+    }
+    return lastNewSiblingCategory.budgetSortIndex + 1;
 }
 
 Meteor.methods({
@@ -86,12 +109,10 @@ Meteor.methods({
     },
 
     'budget.move-to-bottom': (category: Category, superCategory: SuperCategory) => {
-        const lastNewSiblingCategory = CategoryCollection.findOne({superCategoryId: superCategory._id}, {sort: {budgetSortIndex: -1}});
-        if (lastNewSiblingCategory == null) {
-            return CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: 0}});
-        } else {
-            return CategoryCollection.update(category._id, {$set: {superCategoryId: superCategory._id, budgetSortIndex: lastNewSiblingCategory.budgetSortIndex + 1}});
-        }
+        return CategoryCollection.update(category._id, {$set: {
+            superCategoryId: superCategory._id,
+            budgetSortIndex: categoryBudgetSortIndexForBottom(superCategory._id)
+        }});
     },
 
     'budget.create-super-category': (name: string) => {
@@ -101,5 +122,16 @@ Meteor.methods({
             name: name,
             budgetSortIndex: lastSuperCategory ? lastSuperCategory.budgetSortIndex + 1 : 0
         });
+    },
+
+    'budget.create-category': (superCategoryId: string, name: string) => {
+        if (SuperCategoryCollection.findOne(superCategoryId) == null) {
+            throw new Meteor.Error("Category group with ID " + superCategoryId + " doesn't exist");
+        }
+        return CategoryCollection.insert({
+            name: name,
+            superCategoryId: superCategoryId,
+            budgetSortIndex: categoryBudgetSortIndexForBottom(superCategoryId)
+        })
     }
 });

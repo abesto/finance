@@ -3,10 +3,14 @@ import * as _ from 'lodash';
 import {findDOMNode} from 'react-dom';
 import {RIEInput} from 'riek';
 import {DragSource, DragSourceSpec, DropTarget, DropTargetSpec} from "react-dnd";
+import AddIcon from 'material-ui/svg-icons/content/add-circle-outline';
+import {IconButton} from 'material-ui';
 
 import {SuperCategory, SuperCategoryCollection, CategoryCollection, Category} from "../../../api/categories/index";
 import {MoneyAmount} from "./MoneyAmount";
 import {DndTypes} from "../DndTypes";
+import {TextInputDialog} from "./TextInputDialog";
+import {Logger} from "../../../startup/client/Logger";
 
 interface P {
     superCategory: SuperCategory
@@ -93,6 +97,24 @@ interface DndP extends P {
 }
 
 class _SuperCategoryRow extends React.Component<DndP, {}> {
+    createCategoryDialog: TextInputDialog;
+
+    handleClickedCreateCategory = () => {
+        Logger.info({type: 'ui', flow: 'create-category', event: 'clicked-start'});
+        this.createCategoryDialog.open();
+    };
+
+    createCategory = (name) => {
+        Logger.info({type: 'ui', flow: 'create-category', event: 'clicked-create', name: name, superCategory: this.props.superCategory});
+        Meteor.call('budget.create-category', this.props.superCategory._id, name, (err, res) => {
+            if (err) {
+                Logger.info({type: 'ui', flow: 'create-category', event: 'call-failed', name: name, error: err});
+            } else {
+                Logger.info({type: 'ui', flow: 'create-category', event: 'done', name: name, createdId: res});
+            }
+        });
+    };
+
     rename = ({newName}) => {
         Meteor.call('budget.rename-super-category', this.props.superCategory._id, newName);
     };
@@ -101,8 +123,21 @@ class _SuperCategoryRow extends React.Component<DndP, {}> {
         const {connectDragSource, connectDropTarget, superCategory} = this.props;
         return connectDropTarget(connectDragSource(
             <tr className="super-category-row">
-                <td>
+                <td className="super-category-name">
                     <RIEInput className="editable-super-category-name" value={superCategory.name} propName="newName" change={this.rename}/>
+                    <IconButton
+                        className="create-category-button" tooltip="New Category"
+                        style={{width: 24, height: 24, padding: 4}} iconStyle={{width: 16, height: 16}}
+                        onClick={this.handleClickedCreateCategory}
+                    ><AddIcon/></IconButton>
+                    <TextInputDialog
+                        ref={(dlg) => this.createCategoryDialog = dlg}
+                        title="New Category"
+                        description="Category name:"
+                        okButtonLabel="Create"
+                        onOk={this.createCategory}
+                        className="create-category-dialog"
+                    />
                 </td>
                 <td><MoneyAmount amount={0}/></td>
                 <td><MoneyAmount amount={0}/></td>
