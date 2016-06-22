@@ -14,8 +14,12 @@ describe('Budget page', function () {
     }
 
     function createCategory(superCategoryName, name) {
-        // Click the button in the row where category name is superCategoryName
-        browser.click("//tr[@class='super-category-row' and td[@class='super-category-name' and .//text()='"+ superCategoryName + "']]//*[@class='create-category-button']");
+        // Hover the row where category name is superCategoryName to get the "add" button to show...
+        const row = "//tr[@class='super-category-row' and td[@class='super-category-name' and .//text()='"+ superCategoryName + "']]";
+        browser.moveToObject(row);
+        // and then click it
+        browser.click(row + "//*[@class='create-category-button']");
+        // finally use the dialog that opens to create the category
         util.submitTextInputDialog(page.createCategoryDialog, name);
     }
 
