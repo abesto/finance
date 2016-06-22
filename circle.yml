@@ -9,7 +9,7 @@ dependencies:
     - .meteor/local
     - node_modules
   pre:
-    - npm install -g npm
+    - npm install -g npm@2.15.1
     - "[ -f ~/.meteor/meteor ] || curl https://install.meteor.com | /bin/sh"
 
 test:
