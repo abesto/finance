@@ -1,6 +1,5 @@
 Feature: Navigation
 
-  @watch
   Scenario: Sidebar highlights the current menu item
     When I visit the "Budget" page
     Then the "Budget" sidebar item is highlighted
