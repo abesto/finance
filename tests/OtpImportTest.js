@@ -4,21 +4,10 @@
 // These are Chimp globals
 /* globals browser assert server */
 
-const mocha = require('mocha');
+const util = require('./util');
+it = util.it;
 
-const oldIt = it;
-it = function it(name, fn) {
-    return oldIt(name, function () {
-        try {
-            fn();
-        } catch (e) { }
-        if (process.env.hasOwnProperty('CIRCLE_TEST_REPORTS')) {
-            browser.saveScreenshot(process.env.CIRCLE_TEST_REPORTS + '/' + mocha.utils.slug(name) + '.png');
-        }
-    });
-};
-
-describe('OTP Import', function () {
+describe('OTP Import page', function () {
     before(function() {
         browser.url('/otp');
         browser.waitForExist(page.sidebar.otp, 2 * 60 * 1000);
@@ -44,10 +33,7 @@ describe('OTP Import', function () {
     };
 
     it('has the OTP Import sidebar item highlighted', function () {
-        browser.waitForText(page.sidebar.otp);
-        const bgColor = browser.getCssProperty(page.sidebar.otp, 'background-color');
-        assert.equal(bgColor.parsed.hex, '#000000');
-        assert.equal(bgColor.parsed.alpha, 0.2);
+        util.assertSidebarItemIsHighlighted(page.sidebar.otp);
     });
 
     it('can import and expand / collapse OTP CSV transaction logs', function () {

@@ -34,11 +34,12 @@ export class BudgetPage extends React.Component<{}, {}> {
                 description="Category group name:"
                 okButtonLabel="Create"
                 onOk={this.createSuperCategory}
+                className="create-category-group-dialog"
             />
             <Sidebar/>
             <Content>
                 <AppBar
-                    iconElementRight={<FlatButton label="Category Group" icon={<AddIcon />} onClick={this.handleClickeDCreateCategoryGroup} />}
+                    iconElementRight={<FlatButton className="create-category-group-button" label="Category Group" icon={<AddIcon />} onClick={this.handleClickeDCreateCategoryGroup} />}
                     iconElementLeft={<span/>}
                     title="Budget"
                 />

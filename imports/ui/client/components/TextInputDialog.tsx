@@ -6,6 +6,7 @@ interface P {
     description: string
     okButtonLabel: string
     onOk: (string) => void
+    className?: string
 }
 
 interface S {
@@ -52,10 +53,13 @@ export class TextInputDialog extends React.Component<P, S> {
 
         return (
             <Dialog
+                className={this.props.className}
                 title={this.props.title}
                 actions={actions}
                 open={this.state.open}
                 onRequestClose={this.close}
+                bodyClassName={this.props.className + '-body'}
+                overlayClassName={this.props.className + '-overlay'}
             >
                 <p>{this.props.description}</p>
                 <TextField
