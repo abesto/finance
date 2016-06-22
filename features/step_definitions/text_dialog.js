@@ -6,7 +6,7 @@ function submitTextDialog(className, text) {
     browser.click(c('-input [type=text]'));
     browser.clearElement(c('-input [type=text]'));
     browser.keys(text + '\n');
-    browser.waitForVisible(className + '-overlay', null, false);
+    browser.waitForVisible(className + '-overlay', null, true);
     waitUntilDialogOverlayIsGone(className + '-overlay');
 }
 
