@@ -6,5 +6,5 @@ Feature: Navigation
     But the "OTP Import" sidebar item is not highlighted
 
     When I visit the "OTP Import" page
-    Then the "OTP Import" sidebar item is not highlighted
+    Then the "OTP Import" sidebar item is highlighted
     But the "Budget" sidebar item is not highlighted
