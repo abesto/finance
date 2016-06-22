@@ -127,9 +127,11 @@ class _SuperCategoryRow extends React.Component<DndP, {}> {
                     <RIEInput className="editable-super-category-name" value={superCategory.name} propName="newName" change={this.rename}/>
                     <IconButton
                         className="create-category-button" tooltip="New Category"
-                        style={{width: 24, height: 24, padding: 4}} iconStyle={{width: 16, height: 16}}
+                        style={{width: 24, height: 20, padding: 0, verticalAlign: "text-top"}} iconStyle={{width: 20, height: 20}}
                         onClick={this.handleClickedCreateCategory}
-                    ><AddIcon/></IconButton>
+                    >
+                        <AddIcon color="#888888" hoverColor="#050505" />
+                    </IconButton>
                     <TextInputDialog
                         ref={(dlg) => this.createCategoryDialog = dlg}
                         title="New Category"
