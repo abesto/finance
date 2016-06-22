@@ -19,7 +19,7 @@ interface PWithRouter extends PPure {
 
 function PureSidebar({onChange}: PPure) {
     return (
-        <Drawer docked={true}>
+        <Drawer className="sidebar" docked={true}>
             <WnabAppBar/>
             <SelectableList onChange={onChange} value={location.pathname}>
                 <ListItem id="nav-budget" leftIcon={<EmailIcon/>} primaryText="Budget" value="/budget" />

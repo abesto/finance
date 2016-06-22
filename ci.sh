@@ -14,7 +14,7 @@ done
 
 echo "--- Server is up and running, starting tests ---"
 mkdir -p $CIRCLE_TEST_REPORTS
-./node_modules/.bin/chimp .config/chimp.js --mochaReporter=xunit --log=silent > $CIRCLE_TEST_REPORTS/xunit.xml
+./node_modules/.bin/chimp .config/chimp.js
 retval=$?
 
 echo "--- Done ---"

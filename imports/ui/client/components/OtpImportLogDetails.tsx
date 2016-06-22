@@ -52,10 +52,10 @@ export class OtpImportLogDetails extends React.Component<P, S> {
                     {this.renderDialogContent()}
                 </Dialog>
                 <Table className="otp-import-log-details-table">
-                    <TableHeader>
+                    <TableHeader className="otp-import-log-details-table-header">
                         <OtpImportLogEntryTableHeader/>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="otp-import-log-details-table-body">
                         {this.props.importLog.entries.map(item =>
                             <OtpImportLogEntryTableRow
                                 item={item}
