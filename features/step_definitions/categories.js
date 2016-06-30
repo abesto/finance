@@ -1,4 +1,4 @@
-const submitTextDialog = require('./text_dialog').submitTextDialog;
+const submitTextDialog = require('./dialogs').submitTextDialog;
 
 const XPaths = {
     categoryGroupWithName: function (categoryGroupName) {

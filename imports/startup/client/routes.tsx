@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom'
-import { Router, Route, IndexRedirect } from 'react-router'
+import { Router, Route, IndexRoute } from 'react-router'
 
 import { history } from './history';
 import {OtpImportLogListPage, BudgetPage, LoginPage} from "../../ui/client/pages/index.ts"
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {OtpImportLogDetailsPage} from "../../ui/client/pages/OtpImportLogDetailsPage";
 
 function requireAuth(nextState, replace, cb) {
     Meteor.call('isAuthed', function (err, result) {
@@ -48,9 +49,9 @@ Meteor.startup(() =>
           <Router history={history}>
               <Route path="/login" component={LoginPage} onEnter={redirectIfAuthed} />
               <Route path="/" onEnter={requireAuth}>
-                  <IndexRedirect to="/budget" />
-                  <Route path="otp" component={OtpImportLogListPage}/>
-                  <Route path="budget" component={BudgetPage}/>
+                  <IndexRoute component={BudgetPage}/>
+                  <Route path="/otp/:importLogId" component={OtpImportLogDetailsPage}/>
+                  <Route path="/otp" component={OtpImportLogListPage}/>
               </Route>
           </Router>
       </MuiThemeProvider>

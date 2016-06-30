@@ -24,7 +24,7 @@ function waitUntilDialogOverlayIsGone(selector) {
     });
 }
 
-module.exports = function () {
+var myStepDefinitionsWrapper = function () {
     this.When(/^I wait for the text input dialog "([^"]*)" to go away$/, function (className) {
         // Material-UI dialog overlays are deactivated by moving them off the screen to the left
         return browser.waitUntil(function () {
@@ -41,5 +41,5 @@ module.exports = function () {
 
     this.When(/^I submit the text input dialog "([^"]*)" with the text "([^"]*)"$/, submitTextDialog);
 };
-
+module.exports = myStepDefinitionsWrapper;
 module.exports.submitTextDialog = submitTextDialog;

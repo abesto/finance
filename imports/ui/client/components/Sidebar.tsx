@@ -22,7 +22,7 @@ function PureSidebar({onChange}: PPure) {
         <Drawer className="sidebar" docked={true}>
             <WnabAppBar/>
             <SelectableList onChange={onChange} value={location.pathname}>
-                <ListItem id="nav-budget" leftIcon={<EmailIcon/>} primaryText="Budget" value="/budget" />
+                <ListItem id="nav-budget" leftIcon={<EmailIcon/>} primaryText="Budget" value="/" />
                 <ListItem id="nav-all-accounts" leftIcon={<BalanceIcon/>} primaryText="All Accounts" />
                 <ListItem id="nav-otp" leftIcon={<CloudUploadIcon/>} value="/otp" primaryText="OTP Import" />
                 <Divider/>

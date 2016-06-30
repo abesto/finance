@@ -26,12 +26,20 @@ function formatCurrency(amount, currency) {
     return amount + ' ' + currency;
 }
 
+function duplicateStyle(item: OtpImportLogEntry): {color?: string} {
+    if (item.firstImportedIn != null) {
+        return {color: '#cccccc'};
+    } else {
+        return {};
+    }
+}
+
 type ClickableTableRow = new() => React.Component<TableRowProps & {onClick: () => void}, {}>;
 const ClickableTableRow = TableRow as ClickableTableRow;
 
 export const OtpImportLogEntryTableRow = ({item, onClick}: P) =>
     // TODO: move onClick Table#onCellClick once https://github.com/callemall/material-ui/issues/1783 is fixed
-    <ClickableTableRow onClick={() => onClick(item)}>
+    <ClickableTableRow onClick={() => onClick(item)} style={duplicateStyle(item)}>
         <TableRowColumn>{item.line.account}</TableRowColumn>
         <TableRowColumn>{formatDate(item.line.dateEntered)}</TableRowColumn>
         <TableRowColumn>{formatDate(item.line.dateCleared)}</TableRowColumn>

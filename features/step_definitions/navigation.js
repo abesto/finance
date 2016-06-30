@@ -1,6 +1,6 @@
 var myStepDefinitionsWrapper = function () {
     const pageMap = {
-        Budget: '/budget',
+        Budget: '/',
         'OTP Import': '/otp'
     };
 
