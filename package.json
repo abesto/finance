@@ -11,7 +11,7 @@
     "moment": "^2.13.0",
     "npm": "^3.10.3",
     "numeral": "^1.5.3",
-    "react": "^15.1.0",
+    "react": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.1.0",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",

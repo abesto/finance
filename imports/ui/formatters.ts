@@ -1,0 +1,1 @@
+export const money = (amount) => amount + " Ft";

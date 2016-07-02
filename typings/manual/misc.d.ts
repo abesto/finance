@@ -32,21 +32,6 @@ declare module "meteor/collections2" {
     }
 }
 
-// riek
-declare module "riek" {
-    import * as React from 'react';
-
-    interface Prop {
-        value: string
-        propName?: string
-        change?: (any) => any
-        className?: string
-        validate?: (s: string) => boolean
-    }
-
-    export class RIEInput extends React.Component<Prop, {}> {}
-}
-
 // react-dnd-html5-backend
 declare module 'react-dnd-html5-backend' {
     import * as React from 'react';

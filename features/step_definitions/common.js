@@ -19,6 +19,10 @@ var myStepDefinitionsWrapper = function () {
     this.When(/^I click the element saved as "([^"]*)"$/, function (memo) {
         browser.elementIdClick(self[memo]);
     });
+
+    this.When(/^confirm$/, function () {
+        browser.alertAccept();
+    });
 };
 
 module.exports = myStepDefinitionsWrapper;
