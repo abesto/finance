@@ -3,14 +3,14 @@ import {AccountCollection} from "./index";
 
 Meteor.methods({
     'accounts.create': function (name) {
-        AccountCollection.insert({name: name, balance: 0});
+        return AccountCollection.insert({name: name, balance: 0});
     },
 
     'accounts.delete': function (id) {
-        AccountCollection.remove({_id: id});
+        return AccountCollection.remove({_id: id});
     },
 
     'accounts.rename': function (id, newName) {
-        AccountCollection.update({_id: id}, {$set: {name: newName}});
+        return AccountCollection.update({_id: id}, {$set: {name: newName}});
     }
 });
