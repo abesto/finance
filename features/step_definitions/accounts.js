@@ -23,8 +23,15 @@ var myStepDefinitionsWrapper = function () {
     });
 
     this.When(/^I rename the account to "([^"]*)"$/, function (newName) {
+        browser.clearElement('.editable-account-name input');
         browser.click('.editable-account-name');
         browser.keys(newName + '\n');
+    });
+
+    this.When(/^set the OTP account number to "([^"]*)"$/, function (accountNumber) {
+        browser.clearElement('.editable-account-name input');
+        browser.click('.editable-otp-account-number');
+        browser.keys(accountNumber + '\n');
     });
 };
 module.exports = myStepDefinitionsWrapper;

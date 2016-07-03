@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {RaisedButton} from 'material-ui';
+import {RaisedButton, Paper} from 'material-ui';
+import WarningIcon from 'material-ui/svg-icons/alert/warning';
 
-import {RIEMaterialInput} from "./RIEMaterialInput";
-
+import {OurTextField} from "./OurTextField";
 import {Account} from "../../../api/accounts/index";
 import {Logger} from "../../../startup/client/Logger";
 import {history} from "../../../startup/client/history";
@@ -33,9 +33,19 @@ function deleteAccount(account: Account) {
 }
 
 function renameAccount(account: Account) {
-    return function (props) {
-        Logger.info({type: 'rename-account', id: account._id, oldName: account.name, newName: props.newName});
-        Meteor.call('accounts.rename', account._id, props.newName);
+    return function (evt) {
+        const newName = evt.target.value;
+        Logger.info({type: 'rename-account', id: account._id, oldName: account.name, newName: newName});
+        Meteor.call('accounts.rename', account._id, newName);
+    }
+}
+
+function setOtpAccountNumber(account: Account) {
+    return function (evt) {
+        const newNumber = evt.target.value;
+        Logger.info({type: 'set-otp-account-number', id: account._id, name: account.name,
+            oldOtpAccountNumber: account.otpAccountNumber, newOtpAccountNumber: newNumber});
+        Meteor.call('accounts.set-otp-account-number', account._id, newNumber);
     }
 }
 
@@ -49,10 +59,14 @@ export const AccountSettings = ({loading, account}: P) => {
         return <p>Loading account details...</p>
     }
     return <div className="account-settings">
-        <div style={{fontSize: 25}}>
-            <RIEMaterialInput className="editable-account-name" value={account.name} propName="newName"
-                              change={renameAccount(account)} inputName="account-name"/>
-        </div>
-        <RaisedButton className="delete-account-button" label="Delete" secondary={true} onClick={deleteAccount(account)}/>
+        <OurTextField className="editable-account-name" defaultValue={account.name} onBlur={renameAccount(account)} inputName="account-name" floatingLabelText="Name"/><br/>
+        <OurTextField floatingLabelText="OTP Account number" defaultValue={account.otpAccountNumber} onBlur={setOtpAccountNumber(account)}/><br />
+        <Paper style={{padding: 20, paddingTop: 10, marginTop: 15}}>
+            <h2>
+                <WarningIcon style={{verticalAlign: 'middle'}} color="#cc0000" />
+                <span style={{color: '#cc0000', marginLeft: 5}}>Danger zone</span>
+            </h2>
+            <RaisedButton className="delete-account-button" label="Delete Account" secondary={true} onClick={deleteAccount(account)}/>
+        </Paper>
     </div>;
 };

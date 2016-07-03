@@ -1,4 +1,5 @@
 import {Collection2} from "meteor/collections2";
+import "./methods";
 
 export const AccountSchemas: {[key: string]: SimpleSchema} = {};
 
@@ -20,4 +21,3 @@ AccountSchemas["Account"] = new SimpleSchema({
 export const AccountCollection = new Mongo.Collection('accounts') as Collection2<Account>;
 AccountCollection.attachSchema(AccountSchemas["Account"]);
 
-import "./methods";

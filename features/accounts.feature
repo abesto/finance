@@ -5,7 +5,6 @@ Feature: Manage Accounts
     Given an empty database
 
   Scenario: Create an account
-    Given an empty database
     When I create the account "Account A"
     And I create the account "Account B"
     Then the accounts list should have exactly the text
@@ -30,6 +29,7 @@ Feature: Manage Accounts
     0 Ft
     """
 
+  @focus
   Scenario: Rename an account
     Given I create the account "Account A"
 
