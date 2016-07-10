@@ -8,7 +8,7 @@ if ! which meteor > /dev/null; then
     exit 1
 fi
 
-npm install
+meteor npm install
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 env SKIP_AUTHENTICATION=for-testing meteor

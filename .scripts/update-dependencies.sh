@@ -4,5 +4,5 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 meteor update
-npm update --ignore-shrinkwrap --save
-npm shrinkwrap
+meteor npm update --ignore-shrinkwrap --save
+meteor npm shrinkwrap

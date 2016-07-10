@@ -1,4 +1,5 @@
 import {Collection2} from "meteor/collections2";
+import { Meteor } from 'meteor/meteor';
 import "./methods";
 
 export const AccountSchemas: {[key: string]: SimpleSchema} = {};
@@ -21,3 +22,6 @@ AccountSchemas["Account"] = new SimpleSchema({
 export const AccountCollection = new Mongo.Collection('accounts') as Collection2<Account>;
 AccountCollection.attachSchema(AccountSchemas["Account"]);
 
+//Meteor.startup(function () {
+//    AccountCollection.rawCollection().createIndex({otpAccountNumber: 1}, {unique: true});
+//});

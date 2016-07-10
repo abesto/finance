@@ -2,6 +2,7 @@ import * as moment from 'moment'
 import * as _ from 'lodash'
 
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import { Collection2 } from 'meteor/collections2';
 
 export var OtpSchemas: {[key: string]: SimpleSchema} = {};
@@ -49,13 +50,13 @@ OtpSchemas["OtpCsvLine"] = new SimpleSchema({
 export interface OtpImportLogEntry {
     line: OtpCsvLine
     importLogId: string
-    budgetEntry?: any  // Will point to the budget entry this entry was turned into, if any (none if this is a duplicate)
+    budgetEntry?: string  // Transaction._id
     firstImportedIn?: string  // importLogId
 }
 OtpSchemas["OtpImportLogEntry"] = new SimpleSchema({
     line: { type: OtpSchemas["OtpCsvLine"] },
     importLogId: { type: String },
-    budgetEntry: { type: Object, blackbox: true, optional: true },
+    budgetEntry: { type: String, optional: true },
     firstImportedIn: { type: String, optional: true }
 });
 
@@ -97,5 +98,8 @@ OtpSchemas["OtpCsvLineHash"] = new SimpleSchema({
 });
 export const OtpCsvLineHashCollection = new Mongo.Collection('otp.csvlinehash') as Collection2<OtpCsvLineHash>;
 OtpCsvLineHashCollection.attachSchema(OtpSchemas["OtpCsvLineHash"]);
-//OtpCsvLineHashCollection.ensureIndex({hash: 1}, {unique: true});
+
+//Meteor.startup(function () {
+//    OtpCsvLineHashCollection.rawCollection().createIndex({hash: 1}, {unique: true});
+//});
 

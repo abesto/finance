@@ -10,6 +10,7 @@ import {
     OtpImportLogCollection, OtpIncomeOrExpense, OtpImportLogEntry, OtpSchemas, OtpCsvLine,
     OtpCsvLineHashCollection
 } from "../index.ts";
+import {Logger} from "../../../startup/server/Logger";
 
 Meteor.publish('otp.importlogs', () => OtpImportLogCollection.find({}));
 Meteor.publish('otp.importLogs.single', (id) => OtpImportLogCollection.find(id));
@@ -23,17 +24,23 @@ function digest(line: OtpCsvLine): string {
 }
 
 Meteor.methods({
-    'otp/import-csv': function (csvText) {
+    'otp.import-csv': function (csvText) {
         check(csvText, String);
+        const logContext = Logger.withContext(this, {type: 'otp.import-csv'});
+        logContext.info({event: 'start'});
 
+        logContext.info({event: 'parsing-start'});
         var parsed;
         try {
             parsed = parseSync(csvText, {delimiter: ';'});
+            logContext.info({event: 'parsed', lineCount: parsed.length});
         } catch (e) {
+            logContext.error({error: 'csv-parsing-failed', reason: e.toString(), csvText: csvText});
             throw new Meteor.Error('csv-parsing-failed', e.toString());
         }
 
         if (parsed.length == 0) {
+            logContext.error({error: 'empty-csv'});
             throw new Meteor.Error('empty-csv');
         }
 
@@ -61,14 +68,17 @@ Meteor.methods({
                 OtpSchemas["OtpCsvLine"].validate(line);
                 return line;
             })
+            .uniqBy(digest)
             .sortBy('dateEntered')
             .map(line => ({
                 importLogId: null,
                 line: line
             }))
             .value();
+        logContext.info({event: 'parsing-done', entryCount: entries.length});
 
         /// Duplicate detection
+        logContext.info({event: 'duplicate-detection-start'});
         // First, create a map of hash -> import entry of the newly imported items
         const hashes = {};
         _.forEach(entries, entry => hashes[digest(entry.line)] = entry);
@@ -81,7 +91,9 @@ Meteor.methods({
         // Finally update the import log entries accordingly
         _.forEach(hashes, (entry: OtpImportLogEntry, hash: string) => {
             entry.firstImportedIn = existingHashEntriesMap[hash];
+            logContext.info({event: 'duplicate', entry: entry});
         });
+        logContext.info({event: 'duplicate-detection-done'});
 
         // Insert the imported entries into the import log
         const importLogId = OtpImportLogCollection.insert({
@@ -89,7 +101,10 @@ Meteor.methods({
             entries: []
         });
         entries.forEach(entry => { entry.importLogId = importLogId; });
-        OtpImportLogCollection.update({_id: importLogId}, {$set: {entries: entries}});
+        // bypassCollection2, because performance degrades rapidly with number of subdocuments.
+        // see https://github.com/aldeed/meteor-collection2/issues/338
+        OtpImportLogCollection.update({_id: importLogId}, {$set: {entries: entries}}, {bypassCollection2: true});
+        logContext.info({event: 'inserted'});
 
         // Add them to the hash collection, so we know when duplicates are imported later on
         entries.forEach(entry => {
@@ -101,7 +116,12 @@ Meteor.methods({
                 })
             }
         });
+        logContext.info({event: 'hashes-created'});
 
+        // Create appropriate Transactions
+        Meteor.call('transactions.create.otp', importLogId);
+
+        logContext.info({event: 'done', importLogId: importLogId});
         return importLogId;
     }
 });

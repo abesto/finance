@@ -5,7 +5,10 @@ import { render } from 'react-dom'
 import { Router, Route, IndexRoute } from 'react-router'
 
 import { history } from './history';
-import {OtpImportLogListPage, BudgetPage, LoginPage, AccountSettingsPage, OtpImportLogDetailsPage} from "../../ui/client/pages/index.ts"
+import {
+    OtpImportLogListPage, BudgetPage, LoginPage, AccountSettingsPage, OtpImportLogDetailsPage,
+    TransactionsPage
+} from "../../ui/client/pages/index.ts"
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -65,7 +68,7 @@ Meteor.startup(() =>
                   <IndexRoute component={BudgetPage}/>
                   <Route path="/otp/:importLogId" component={OtpImportLogDetailsPage}/>
                   <Route path="/otp" component={OtpImportLogListPage}/>
-                  <Route path="/account" component={() => <p>Not implemented</p>}/>
+                  <Route path="/account" component={TransactionsPage}/>
                   <Route path="/account/:accountId/settings" component={AccountSettingsPage}/>
               </Route>
           </Router>

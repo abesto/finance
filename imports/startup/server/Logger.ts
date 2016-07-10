@@ -7,6 +7,10 @@ interface LoggerContext {
     connection: Meteor.Connection
 }
 
+function coalesce(msgs: {}[]) {
+    return _.reduce(msgs, _.extend, {});
+}
+
 function decorate(ctx: LoggerContext, msg) {
     msg["user"] = {id: ctx.userId, email: getEmail(ctx)};
     msg["connection"] = {id: ctx.connection.id, clientAddress: ctx.connection.clientAddress};
@@ -16,13 +20,25 @@ function decorate(ctx: LoggerContext, msg) {
     return msg;
 }
 
+interface ILogger {
+    info: (...msgs: {}[]) => void
+    error: (...msgs: {}[]) => void
+    withContext: (...ctxs: {}[]) => ILogger
+}
+
 export const Logger = {
-    info: function(ctx: LoggerContext, msg) {
-        console.log('%j', decorate(ctx, msg));
+    info: function(ctx: LoggerContext, ...msgs) {
+        console.log('%j', decorate(ctx, coalesce(msgs)));
     },
 
-    error: function(ctx: LoggerContext, msg) {
-        console.error('%j', decorate(ctx, msg));
+    error: function(ctx: LoggerContext, ...msgs) {
+        console.error('%j', decorate(ctx, coalesce(msgs)));
+    },
+
+    withContext: function(...ctxs: {}[]): ILogger {
+        return _.mapValues(Logger, function (f) {
+            return _.partial(f, ...ctxs);
+        });
     }
 };
 

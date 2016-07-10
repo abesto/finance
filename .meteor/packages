@@ -27,3 +27,5 @@ meteortypescript:compiler
 less
 accounts-ui
 accounts-google
+utilities:meteor-griddle
+tmeasday:publish-counts

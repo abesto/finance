@@ -16,7 +16,9 @@ export class OtpImportActionComponent extends React.Component<P, {}>{
 
     startImport() {
         Logger.info({type: 'ui', flow: 'otp-import', event: 'clicked-start'});
-        findDOMNode<HTMLInputElement>(this.refs["fileInput"]).click();
+        const input = findDOMNode<HTMLInputElement>(this.refs["fileInput"]);
+        input.value = '';
+        input.click();
     }
 
     onChange(evt) {
@@ -31,7 +33,7 @@ export class OtpImportActionComponent extends React.Component<P, {}>{
 
         reader.addEventListener("loadend", () => {
             Logger.info({type: 'ui', flow: 'otp-import', event: 'file-loaded', content: reader.result});
-            Meteor.call("otp/import-csv", reader.result, (err, importLogId) => {
+            Meteor.call("otp.import-csv", reader.result, (err, importLogId) => {
                 if (err) {
                     Logger.info({type: 'ui', flow: 'otp-import', event: 'call-failed', error: err});
                     alert(err);

@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "csv-parse": "^1.1.1",
-    "griddle-react": "^0.5.1",
+    "griddle-react": "https://github.com/abesto/Griddle/tarball/patch-1",
     "install": "^0.8.1",
     "lodash": "^4.13.1",
     "material-ui": "^0.15.0",
@@ -13,6 +13,7 @@
     "numeral": "^1.5.3",
     "react": "^15.2.0",
     "react-addons-pure-render-mixin": "^15.1.0",
+    "react-dimensions": "^1.3.0",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.2.0",

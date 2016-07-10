@@ -3,6 +3,7 @@ import {CategoryCollection, SuperCategoryCollection} from "../../api/categories/
 import {OtpCsvLineHashCollection, OtpImportLogCollection} from "../../api/otp/index";
 import {Logger} from "../server/Logger";
 import {AccountCollection} from "../../api/accounts/index";
+import {TransactionCollection} from "../../api/transactions/index";
 
 if (skipAuthentication) {
     Meteor.methods({
@@ -10,7 +11,7 @@ if (skipAuthentication) {
             Logger.info(this, {type: 'fixture', name: 'reset-database'});
             [
                 CategoryCollection, SuperCategoryCollection, OtpCsvLineHashCollection, OtpImportLogCollection,
-                AccountCollection
+                AccountCollection, TransactionCollection
             ].forEach(
                 (coll) => coll.remove({})
             );
